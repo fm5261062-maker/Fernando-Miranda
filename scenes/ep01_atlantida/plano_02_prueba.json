@@ -1,0 +1,81 @@
+{
+  "id": "ep01_e1_plano02_prueba",
+  "title": "Episodio 1, Escena 1, Plano 2 (00:10-00:20): Silent camina de espaldas hacia el acantilado",
+  "note": "PRUEBA de caminata para revisión. Sin narración (la voz se añadirá después). Pistas de audio independientes en renders/<id>/<calidad>/audio/.",
+  "reference": "assets/reference/escena1/plano_02_acantilado.png",
+  "character": "silent",
+  "character_view": "back",
+  "background": "cliff_night",
+  "fade_in": 0.0,
+  "fade_out": 0.0,
+  "loudness_lufs": -24,
+  "wind": {
+    "base": 0.3,
+    "gust": 0.75,
+    "gust_period_s": 5.0,
+    "seed": 4
+  },
+  "shots": [
+    {
+      "id": "plano02",
+      "duration": 10.0,
+      "description": "Silent camina de espaldas por la roca hacia el borde; la cámara lo sigue a la altura del hombro, acercándose poco a poco. La luna, el mar y la isla con cascadas quedan delante de él.",
+      "character": {
+        "x": -0.15,
+        "z": 5.6,
+        "toward_camera": -1,
+        "drift_x": 0.03
+      },
+      "actions": [
+        {
+          "type": "walk_front",
+          "start": 0,
+          "params": {
+            "speed": 0.78,
+            "cycle": 1.12,
+            "arm_swing": 20,
+            "elbow_forward": 16,
+            "hand_inward": 4,
+            "lift": 0.12,
+            "drop": 0.046,
+            "sway": 7.0,
+            "phase": 0.1
+          }
+        }
+      ],
+      "camera": {
+        "keys": [
+          {
+            "t": 0.0,
+            "distance": 5.0,
+            "pan_x": -0.2,
+            "zoom": 1.0,
+            "horizon": 0.28,
+            "height": 1.7
+          },
+          {
+            "t": 10.0,
+            "distance": 4.5,
+            "pan_x": 0.08,
+            "zoom": 1.04,
+            "horizon": 0.28,
+            "height": 1.7
+          }
+        ],
+        "shake": 1.1
+      },
+      "transition": {
+        "type": "cut"
+      }
+    }
+  ],
+  "narration": [],
+  "ambience": {
+    "type": "cliff",
+    "volume_db": 0
+  },
+  "footsteps": {
+    "surface": "rock",
+    "volume_db": 0
+  }
+}

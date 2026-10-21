@@ -15,6 +15,7 @@ from . import audio
 from .actions import Timeline
 from .camera import Camera
 from .character import Rig
+from .secondary import apply_secondary, wind_curve
 from .stage import (Stage, char_screen_matrix, ground_effects, light_character,
                     paste_clipped, post, stamp)
 
@@ -81,6 +82,8 @@ def plan_scene(scene, project, rig):
                         and meta.get(k + "@w", 0) > 0.5}
             frames.append({"i": i, "t": t, "tg": offset + t, "cam": st, "ch": ch,
                            "meta": meta, "z": z, "X": X, "d": d, "variants": variants})
+        apply_secondary(frames, fps, rig, wind_curve(scene.get("wind") or sh.get("wind")),
+                        t_offset=offset)
         shot = {"id": sh.get("id", f"sh{k + 1:02d}"), "index": k, "duration": dur,
                 "n": n, "offset": offset, "transition": tr, "transition_d": trd,
                 "frames": frames, "spec": sh}
@@ -274,12 +277,16 @@ class SceneRenderer:
         fs = self.scene.get("footsteps", {})
         if fs.get("enabled", True):
             p = os.path.join(a_dir, "footsteps.wav")
-            audio.write_wav(p, audio.footsteps(events, self.total))
+            audio.write_wav(p, audio.footsteps(events, self.total,
+                                               surface=fs.get("surface", "sand")))
             stems.append((p, levels["sfx"] + fs.get("volume_db", 0), "sfx"))
         amb = self.scene.get("ambience", {})
         if amb:
             if amb.get("file") and os.path.exists(rel(amb["file"])):
                 p = rel(amb["file"])
+            elif amb.get("type") == "cliff":
+                p = os.path.join(a_dir, "ambience.wav")
+                audio.write_wav(p, audio.cliff(self.total, wind_curve(self.scene.get("wind"))))
             else:
                 stage = self.stage
                 wash_name = stage.spec.get("audio", {}).get("wash_layer", "shore_wash")
@@ -307,7 +314,10 @@ class SceneRenderer:
                 stems.append((p, levels["music"] + mus.get("volume_db", 0), "music"))
         narr = [(rel(n["file"]), n["start"], levels["narration"] + n.get("volume_db", 0))
                 for n in self.scene.get("narration", []) if os.path.exists(rel(n["file"]))]
-        stats = audio.mix(stems, narr, self.total, out_wav, self.project["audio"])
+        target = dict(self.project["audio"])
+        if "loudness_lufs" in self.scene:      # p. ej. dejar hueco para la voz futura
+            target["loudness_lufs"] = self.scene["loudness_lufs"]
+        stats = audio.mix(stems, narr, self.total, out_wav, target)
         return stats, events
 
     # -------------------------- todo -------------------------------------
@@ -341,7 +351,9 @@ class SceneRenderer:
         audio.ffmpeg(["-i", video, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy",
                       "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-shortest",
                       "-movflags", "+faststart", final])
-        report["audio"] = {"target_lufs": self.project["audio"]["loudness_lufs"],
+        report["audio"] = {"target_lufs": self.scene.get("loudness_lufs",
+                                                         self.project["audio"]["loudness_lufs"]),
+                           "stems": sorted(os.listdir(os.path.join(self.out_dir, "audio"))),
                            "measured_final": audio.measure(final),
                            "footsteps": [{"t": round(e["t"], 3), "side": e["side"],
                                           "shot": e["shot"]} for e in events]}

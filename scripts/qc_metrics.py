@@ -54,6 +54,8 @@ def walk_metrics(r):
 def tiling(set_dir, name="04_surf.png"):
     """Correlacion maxima de la capa consigo misma desplazada (1 = patron repetido)."""
     p = os.path.join(set_dir, name)
+    if not os.path.exists(p):
+        return None
     a = np.asarray(Image.open(p).getchannel("A"), np.float32)
     rows = a[a.sum(1) > 0]
     prof = rows.mean(0) - rows.mean()

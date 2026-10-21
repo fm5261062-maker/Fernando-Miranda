@@ -1,0 +1,281 @@
+{
+  "name": "cliff_night",
+  "placeholder": true,
+  "note": "Capas PROVISIONALES (referencia: assets/reference/escena1/plano_02).",
+  "layer_size": [
+    2560,
+    1440
+  ],
+  "reference_frame": [
+    1920,
+    1080
+  ],
+  "geometry": {
+    "focal_px_1080": 2015.0,
+    "camera_height_m": 1.7,
+    "cliff_drop_m": 45.0,
+    "edge_distance_m": 17.0,
+    "rule": "fila = horizon_px + focal * (altura_camara - altura) / distancia"
+  },
+  "layers": [
+    {
+      "name": "sky",
+      "image": "00_sky.png",
+      "distance": "inf",
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "clouds",
+      "image": "01_clouds.png",
+      "distance": 4000,
+      "anim": {
+        "type": "scroll",
+        "speed_px_s": 7
+      },
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "mountains",
+      "image": "02_mountains.png",
+      "distance": 3000,
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "sea",
+      "image": "03_sea.png",
+      "distance": 900,
+      "anim": {
+        "type": "waves",
+        "rows": [
+          470,
+          810
+        ],
+        "amp_px": 2.0,
+        "wavelength_rows": 4,
+        "speed": 0.5
+      },
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "island",
+      "image": "04_island.png",
+      "distance": 700,
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "falls",
+      "image": "05_falls.png",
+      "distance": 700,
+      "anim": {
+        "type": "flow",
+        "speed_px_s": 40
+      },
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "fog",
+      "image": "06_fog.png",
+      "distance": 500,
+      "anim": {
+        "type": "scroll",
+        "speed_px_s": 14
+      },
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "ground",
+      "image": "07_ground.png",
+      "distance": 17.0,
+      "ground": true,
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "rocks",
+      "image": "08_rocks.png",
+      "distance": 10,
+      "horizon_px": 470,
+      "placeholder": true
+    },
+    {
+      "name": "foreground",
+      "image": "09_foreground.png",
+      "distance": 1.6,
+      "follow_camera": true,
+      "anim": {
+        "type": "sway",
+        "amp_px": 5,
+        "speed": 0.35
+      },
+      "horizon_px": 470,
+      "placeholder": true
+    }
+  ],
+  "particles": [
+    {
+      "name": "glints",
+      "type": "glint",
+      "distance": 900,
+      "count": 110,
+      "region": [
+        1848.0,
+        2248.0,
+        472,
+        620
+      ],
+      "size": [
+        1.2,
+        3.0
+      ],
+      "color": [
+        220,
+        232,
+        255
+      ],
+      "alpha": 0.85
+    },
+    {
+      "name": "falls_spray",
+      "distance": 700,
+      "count": 60,
+      "region": [
+        1638.4,
+        2406.3999999999996,
+        574.4292857142857,
+        604.4292857142857
+      ],
+      "velocity": [
+        6,
+        -10
+      ],
+      "life": [
+        1.5,
+        3.5
+      ],
+      "size": [
+        2,
+        5
+      ],
+      "color": [
+        210,
+        222,
+        245
+      ],
+      "alpha": 0.35
+    },
+    {
+      "name": "wind_debris",
+      "distance": 6,
+      "count": 18,
+      "region": [
+        -200,
+        2560,
+        300,
+        1440
+      ],
+      "velocity": [
+        120,
+        -14
+      ],
+      "life": [
+        2.0,
+        3.5
+      ],
+      "size": [
+        2,
+        4
+      ],
+      "color": [
+        150,
+        160,
+        180
+      ],
+      "alpha": 0.5
+    },
+    {
+      "name": "mist",
+      "distance": 2.5,
+      "count": 10,
+      "region": [
+        0,
+        2560,
+        300,
+        1440
+      ],
+      "velocity": [
+        40,
+        -4
+      ],
+      "life": [
+        5,
+        9
+      ],
+      "size": [
+        20,
+        48
+      ],
+      "color": [
+        170,
+        190,
+        230
+      ],
+      "alpha": 0.07,
+      "blur": 1
+    }
+  ],
+  "lighting": {
+    "sun_dir": [
+      0.62,
+      -0.78
+    ],
+    "ambient": [
+      0.58,
+      0.64,
+      0.82
+    ],
+    "rim_color": [
+      200,
+      220,
+      255
+    ],
+    "rim_strength": 1.15,
+    "rim_width": 6,
+    "shadow_strength": 0.45,
+    "reflection": 0.0,
+    "contact_shadow": 0.6
+  },
+  "grade": {
+    "lift": [
+      0.006,
+      0.012,
+      0.03
+    ],
+    "gain": [
+      0.98,
+      1.0,
+      1.06
+    ],
+    "saturation": 0.95,
+    "contrast": 1.08,
+    "vignette": 0.36,
+    "grain": 0.014,
+    "bloom": 0.35,
+    "bloom_threshold": 0.72,
+    "haze": [
+      0.2,
+      0.27,
+      0.42,
+      0.03
+    ]
+  },
+  "audio": {
+    "ambience": "cliff"
+  }
+}

@@ -1,5 +1,11 @@
 # Recursos que faltan (Las Crónicas de Silent)
 
+> **Episodio 1, Escena 1:** la lista por plano está en `docs/ep01_escena1_plan.md`.
+> Importante: según las referencias de la escena 1, Silent lleva **chaqueta con cremallera y
+> mochila táctica negra**. Las capas frontales provisionales de abajo (sudadera con bolsillo
+> canguro) no coinciden con ese diseño y hay que rehacerlas.
+
+
 Mientras falten estos recursos, el render muestra el sello **"PRUEBA TÉCNICA - ARTE
 PROVISIONAL"**. Todo lo que hay ahora en `assets/` lo genera
 `scripts/make_placeholder_assets.py` y está marcado con `"placeholder": true`.

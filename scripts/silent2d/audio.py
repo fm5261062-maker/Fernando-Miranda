@@ -46,8 +46,9 @@ def norm(x, peak=0.9):
 
 
 # ---------------------------------------------------------------------------
-def footsteps(events, total, seed=3):
-    """Pasos en arena: crujido filtrado + golpe grave del talon."""
+def footsteps(events, total, seed=3, surface="sand"):
+    """Pasos: crujido filtrado + golpe grave del talon (arena o roca)."""
+    rock = surface == "rock"
     n = int(total * SR) + SR
     out = np.zeros((n, 2))
     rng = np.random.default_rng(seed)
@@ -55,13 +56,16 @@ def footsteps(events, total, seed=3):
     tt = np.arange(L) / SR
     for ev in events:
         g = ev["gain"] * (0.85 + 0.3 * rng.random())
-        noise = band(rng.standard_normal(L), 350 + 150 * rng.random(), 3200, order=2)
-        env = (1 - np.exp(-tt / 0.004)) * np.exp(-tt / (0.05 + 0.03 * rng.random()))
+        noise = band(rng.standard_normal(L), (900 if rock else 350) + 150 * rng.random(),
+                     6500 if rock else 3200, order=2)
+        env = (1 - np.exp(-tt / 0.002)) * np.exp(-tt / ((0.025 if rock else 0.05) +
+                                                       0.02 * rng.random()))
         grains = np.zeros(L)
         idx = rng.integers(0, int(0.09 * SR), 40)
         grains[idx] = rng.standard_normal(40)
         grains = band(grains, 1500, 6000) * np.exp(-tt / 0.06)
-        thump = np.sin(2 * np.pi * (70 + 20 * rng.random()) * tt) * np.exp(-tt / 0.035)
+        thump = np.sin(2 * np.pi * ((95 if rock else 70) + 20 * rng.random()) * tt) * \
+            np.exp(-tt / (0.022 if rock else 0.035))
         s = norm(noise * env, 0.6) + norm(grains, 0.25) + 0.45 * thump
         i0 = int(ev["t"] * SR)
         if i0 >= n:
@@ -92,6 +96,29 @@ def ocean(total, wash_fn, crash_times, seed=11):
         crash_n = band(rng.standard_normal(n), 120, 4500, order=1) * crash
         sig = (norm(rumble, 0.5) * (0.75 + 0.25 * wash) +
                norm(foam, 0.18) * (0.25 + 0.9 * wash) + norm(crash_n, 0.45))
+        ch.append(sig)
+    return np.stack(ch, axis=1)
+
+
+def cliff(total, wind_fn, seed=17):
+    """Acantilado nocturno: viento (rafagas sincronizadas con la ropa), mar lejano
+    y cascada distante."""
+    n = int(total * SR)
+    rng = np.random.default_rng(seed)
+    t = np.arange(n) / SR
+    w = np.array([wind_fn(x) for x in np.linspace(0, total, int(total * 50) + 1)])
+    w = np.interp(t, np.linspace(0, total, len(w)), w)
+    ch = []
+    for c in range(2):
+        low = band(rng.standard_normal(n), 60, 500, order=2)
+        hiss = band(rng.standard_normal(n), 700, 4000, order=2)
+        whistle = band(rng.standard_normal(n), 1100 + 300 * c, 1500 + 300 * c, order=4)
+        sea = band(rng.standard_normal(n), 25, 220, order=2)
+        falls = band(rng.standard_normal(n), 300, 2500, order=1)
+        swell = 0.7 + 0.3 * np.sin(2 * np.pi * t / 9.0 + c)
+        sig = (norm(low, 0.45) * (0.4 + 0.8 * w) + norm(hiss, 0.25) * (0.15 + 0.9 * w ** 1.5) +
+               norm(whistle, 0.06) * np.clip(w - 0.5, 0, 1) +
+               norm(sea, 0.35) * swell + norm(falls, 0.05))
         ch.append(sig)
     return np.stack(ch, axis=1)
 

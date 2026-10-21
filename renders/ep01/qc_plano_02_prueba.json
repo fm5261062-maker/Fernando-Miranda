@@ -1,0 +1,34 @@
+{
+  "scene": "scenes/ep01_atlantida/plano_02_prueba.json",
+  "video": "renders/ep01/plano_02_prueba_caminata.mp4",
+  "total_s": 10.0,
+  "shots": [
+    {
+      "id": "plano02",
+      "duration": 10.0,
+      "transition": "cut",
+      "within_rule": true
+    }
+  ],
+  "double_exposure_frames": 0,
+  "ik_clamped": "3/480",
+  "ik_clamped_pct": 0.6,
+  "hand_travel_px_1080": [
+    {
+      "shot": "plano02",
+      "x": 37.7,
+      "y": 116.3
+    }
+  ],
+  "ankle_travel_px_1080": [
+    {
+      "shot": "plano02",
+      "y": 106.2
+    }
+  ],
+  "surf_layer_self_correlation": null,
+  "audio_final": {
+    "integrated_lufs": -24.2,
+    "true_peak_dbfs": -5.7
+  }
+}

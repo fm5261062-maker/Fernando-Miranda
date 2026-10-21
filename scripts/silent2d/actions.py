@@ -17,7 +17,8 @@ SIDES = (("L", 1), ("R", -1))
 def neutral(rig):
     c = {"root_x": 0.0, "root_y": 0.0, "pelvis_rot": 0.0, "torso_rot": 0.0,
          "head_rot": 0.0, "head_turn": 0.0, "blink": 1.0, "string_swing": 0.0,
-         "speed": 0.0}
+         "speed": 0.0, "pack_dy": 0.0, "pack_rot": 0.0, "coat_swing": 0.0,
+         "hood_wind": 0.0}
     for side, s in SIDES:
         c[f"ankle_x.{side}"] = float(rig.joints[f"ankle.{side}"][0])
         c[f"ankle_h.{side}"] = rig.rest_ankle_h
@@ -69,7 +70,7 @@ def gait(t, p, rig):
             z = -zr + 2 * zr * e
             h = rig.rest_ankle_h + lift * math.sin(math.pi * u) ** 1.3
             pitch = lerp(22.0, -8.0, smoothstep(u))
-            x = rest_x - s * 5.0 * math.sin(math.pi * u)
+            x = rest_x - (1 if rest_x > 0 else -1) * 5.0 * math.sin(math.pi * u)
         c[f"ankle_x.{side}"] = x
         c[f"ankle_z.{side}"] = z
         c[f"ankle_h.{side}"] = h

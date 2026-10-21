@@ -1,0 +1,338 @@
+{
+  "name": "Silent",
+  "view": "back",
+  "placeholder": true,
+  "note": "Capas PROVISIONALES de espaldas (chaqueta con capucha, faldon largo, mochila tactica) segun las referencias de la escena 1. Sustituir por las capas ilustradas definitivas.",
+  "units": "1000 = altura total (1.78 m); origen en el suelo; y hacia abajo; de espaldas .L queda a la izquierda de pantalla",
+  "height_m": 1.78,
+  "art_units_per_height": 1000,
+  "image_scale": 1.5,
+  "joints": {
+    "pelvis": [
+      0,
+      -505
+    ],
+    "crotch": [
+      0,
+      -412
+    ],
+    "neck": [
+      0,
+      -835
+    ],
+    "head_top": [
+      0,
+      -1020
+    ],
+    "shoulder.L": [
+      -107,
+      -798
+    ],
+    "elbow.L": [
+      -118,
+      -629
+    ],
+    "wrist.L": [
+      -126,
+      -477
+    ],
+    "hand_tip.L": [
+      -130,
+      -376
+    ],
+    "hip.L": [
+      -55,
+      -494
+    ],
+    "knee.L": [
+      -52,
+      -281
+    ],
+    "ankle.L": [
+      -51,
+      -45
+    ],
+    "toe.L": [
+      -51,
+      0
+    ],
+    "shoulder.R": [
+      107,
+      -798
+    ],
+    "elbow.R": [
+      118,
+      -629
+    ],
+    "wrist.R": [
+      126,
+      -477
+    ],
+    "hand_tip.R": [
+      130,
+      -376
+    ],
+    "hip.R": [
+      55,
+      -494
+    ],
+    "knee.R": [
+      52,
+      -281
+    ],
+    "ankle.R": [
+      51,
+      -45
+    ],
+    "toe.R": [
+      51,
+      0
+    ],
+    "pack_top": [
+      0,
+      -820
+    ],
+    "pack_bottom": [
+      0,
+      -522
+    ],
+    "hem_top": [
+      0,
+      -575
+    ],
+    "hem_bottom": [
+      0,
+      -412
+    ]
+  },
+  "parts": {
+    "foot.R": {
+      "image": "foot.R.png",
+      "bone": [
+        "ankle.R",
+        "toe.R"
+      ],
+      "image_origin": [
+        -2.666666666666657,
+        -101.33333333333337
+      ],
+      "placeholder": true
+    },
+    "foot.L": {
+      "image": "foot.L.png",
+      "bone": [
+        "ankle.L",
+        "toe.L"
+      ],
+      "image_origin": [
+        -105.33333333333333,
+        -101.33333333333337
+      ],
+      "placeholder": true
+    },
+    "shin.R": {
+      "image": "shin.R.png",
+      "bone": [
+        "knee.R",
+        "ankle.R"
+      ],
+      "image_origin": [
+        8.666666666666657,
+        -322.0
+      ],
+      "placeholder": true
+    },
+    "shin.L": {
+      "image": "shin.L.png",
+      "bone": [
+        "knee.L",
+        "ankle.L"
+      ],
+      "image_origin": [
+        -98.0,
+        -322.0
+      ],
+      "placeholder": true
+    },
+    "thigh.R": {
+      "image": "thigh.R.png",
+      "bone": [
+        "hip.R",
+        "knee.R"
+      ],
+      "image_origin": [
+        -8.666666666666657,
+        -544.0
+      ],
+      "placeholder": true
+    },
+    "thigh.L": {
+      "image": "thigh.L.png",
+      "bone": [
+        "hip.L",
+        "knee.L"
+      ],
+      "image_origin": [
+        -124.66666666666667,
+        -544.0
+      ],
+      "placeholder": true
+    },
+    "pelvis": {
+      "image": "pelvis.png",
+      "bone": [
+        "pelvis",
+        "crotch"
+      ],
+      "image_origin": [
+        -137.33333333333331,
+        -554.0
+      ],
+      "placeholder": true
+    },
+    "coat_tail": {
+      "image": "coat_tail.png",
+      "bone": [
+        "hem_top",
+        "hem_bottom"
+      ],
+      "image_origin": [
+        -133.33333333333331,
+        -590.6666666666667
+      ],
+      "placeholder": true
+    },
+    "torso": {
+      "image": "torso.png",
+      "bone": [
+        "pelvis",
+        "neck"
+      ],
+      "image_origin": [
+        -129.33333333333331,
+        -857.3333333333334
+      ],
+      "placeholder": true
+    },
+    "upper_arm.R": {
+      "image": "upper_arm.R.png",
+      "bone": [
+        "shoulder.R",
+        "elbow.R"
+      ],
+      "image_origin": [
+        84.0,
+        -833.3333333333334
+      ],
+      "placeholder": true
+    },
+    "upper_arm.L": {
+      "image": "upper_arm.L.png",
+      "bone": [
+        "shoulder.L",
+        "elbow.L"
+      ],
+      "image_origin": [
+        -142.66666666666669,
+        -833.3333333333334
+      ],
+      "placeholder": true
+    },
+    "forearm.R": {
+      "image": "forearm.R.png",
+      "bone": [
+        "elbow.R",
+        "wrist.R"
+      ],
+      "image_origin": [
+        92.66666666666669,
+        -661.3333333333333
+      ],
+      "placeholder": true
+    },
+    "forearm.L": {
+      "image": "forearm.L.png",
+      "bone": [
+        "elbow.L",
+        "wrist.L"
+      ],
+      "image_origin": [
+        -146.66666666666669,
+        -661.3333333333333
+      ],
+      "placeholder": true
+    },
+    "hand.R": {
+      "image": "hand.R.png",
+      "bone": [
+        "wrist.R",
+        "hand_tip.R"
+      ],
+      "image_origin": [
+        101.33333333333331,
+        -493.33333333333337
+      ],
+      "placeholder": true
+    },
+    "hand.L": {
+      "image": "hand.L.png",
+      "bone": [
+        "wrist.L",
+        "hand_tip.L"
+      ],
+      "image_origin": [
+        -154.66666666666669,
+        -493.33333333333337
+      ],
+      "placeholder": true
+    },
+    "hood": {
+      "image": "hood.png",
+      "bone": [
+        "neck",
+        "head_top"
+      ],
+      "image_origin": [
+        -115.33333333333333,
+        -1035.3333333333333
+      ],
+      "placeholder": true
+    },
+    "backpack": {
+      "image": "backpack.png",
+      "bone": [
+        "pack_top",
+        "pack_bottom"
+      ],
+      "image_origin": [
+        -123.33333333333333,
+        -854.0
+      ],
+      "placeholder": true
+    }
+  },
+  "draw_order": [
+    "foot.R",
+    "foot.L",
+    "shin.R",
+    "shin.L",
+    "thigh.R",
+    "thigh.L",
+    "pelvis",
+    "coat_tail",
+    "torso",
+    "upper_arm.R",
+    "upper_arm.L",
+    "forearm.R",
+    "forearm.L",
+    "hand.R",
+    "hand.L",
+    "hood",
+    "backpack"
+  ],
+  "secondary": {
+    "backpack": "pack_dy/pack_rot (muelle)",
+    "coat_tail": "coat_swing (muelle + viento)",
+    "hood": "hood_wind (viento)"
+  }
+}

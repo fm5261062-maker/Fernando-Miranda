@@ -44,6 +44,8 @@ class Rig:
         self.folder = folder
         self.spec = spec
         self.view = spec.get("view", "front")
+        # "back": el personaje mira hacia el fondo; avanzar = alejarse de camara
+        self.zsign = -1.0 if self.view == "back" else 1.0
         self.units = spec["art_units_per_height"]
         self.height_m = spec["height_m"]
         self.ppm = self.units / self.height_m
@@ -115,12 +117,25 @@ class Rig:
         out["pelvis"] = pel
         out["crotch"] = pel + rot2(J["crotch"] - J["pelvis"], a_p)
         out["neck"] = pel + rot2(J["neck"] - J["pelvis"], a_t)
-        out["string_top"] = pel + rot2(J["string_top"] - J["pelvis"], a_t)
-        out["string_end"] = out["string_top"] + rot2(
-            J["string_end"] - J["string_top"], a_t + c["string_swing"])
+        if "string_top" in J:
+            out["string_top"] = pel + rot2(J["string_top"] - J["pelvis"], a_t)
+            out["string_end"] = out["string_top"] + rot2(
+                J["string_end"] - J["string_top"], a_t + c["string_swing"])
         out["head_top"] = out["neck"] + rot2(J["head_top"] - J["neck"], a_h)
+        zs = self.zsign
+        # piezas con movimiento secundario (mochila, faldon de la chaqueta)
+        if "pack_top" in J:
+            out["pack_top"] = pel + rot2(J["pack_top"] - J["pelvis"], a_t) + \
+                np.array([0.0, c.get("pack_dy", 0.0)])
+            out["pack_bottom"] = out["pack_top"] + rot2(J["pack_bottom"] - J["pack_top"],
+                                                        a_t + c.get("pack_rot", 0.0))
+        if "hem_top" in J:
+            out["hem_top"] = pel + rot2(J["hem_top"] - J["pelvis"], a_t)
+            out["hem_bottom"] = out["hem_top"] + rot2(J["hem_bottom"] - J["hem_top"],
+                                                      a_p + c.get("coat_swing", 0.0))
 
-        for side, s in (("L", 1), ("R", -1)):
+        for side in ("L", "R"):
+            s = 1.0 if J[f"shoulder.{side}"][0] > 0 else -1.0   # lado de pantalla
             # ---------------- piernas: IK sagital + proyeccion ------------
             hip = pel + rot2(J[f"hip.{side}"] - J["pelvis"], a_p)
             out[f"hip.{side}"] = hip
@@ -140,8 +155,8 @@ class Rig:
             ax = c[f"ankle_x.{side}"]
             bend = sa
             kx = 0.5 * (hip[0] + ax) + s * 5 * bend
-            knee, sk = self.persp(kx, -knee_zh[1] * ppm, knee_zh[0], d, h_cam)
-            ankle, sa_ = self.persp(ax, -ankle_zh[1] * ppm, ankle_zh[0], d, h_cam)
+            knee, sk = self.persp(kx, -knee_zh[1] * ppm, zs * knee_zh[0], d, h_cam)
+            ankle, sa_ = self.persp(ax, -ankle_zh[1] * ppm, zs * ankle_zh[0], d, h_cam)
             out[f"knee.{side}"] = knee
             out[f"ankle.{side}"] = ankle
             toe_len = (J[f"toe.{side}"][1] - J[f"ankle.{side}"][1]) * sa_
@@ -171,7 +186,7 @@ class Rig:
                 dv = np.array([d0[0], d0[1] * math.cos(phi), d0[1] * math.sin(phi)])
                 xy = rot2(dv[:2], a_t)
                 pos = pos + np.array([xy[0] * length, xy[1] * length,
-                                      dv[2] * length / ppm])
+                                      zs * dv[2] * length / ppm])
                 p2, k = self.persp(pos[0], pos[1], pos[2], d, h_cam)
                 out[f"{nm}.{side}"] = p2
                 scales.append(k)
@@ -189,6 +204,9 @@ class Rig:
         extra["eyes"] = T(turn * 14, 0) @ T(*eye_c) @ \
             S(1 - 0.18 * abs(turn), max(c["blink"], 0.06)) @ T(*-eye_c)
         extra["hood_rim"] = T(turn * 3, 0)
+        hw = c.get("hood_wind", 0.0)
+        if hw:
+            extra["hood"] = T(*J["neck"]) @ R(hw) @ T(*-J["neck"])
         return out, width, extra
 
     # ------------------------------------------------------------------

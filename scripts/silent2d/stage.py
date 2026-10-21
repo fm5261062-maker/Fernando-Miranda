@@ -93,6 +93,34 @@ class Stage:
             a1 = band[ri, (i0 + 1) % w].astype(np.float32)
             out = out.copy() if out is arr else out
             out[r0:r1] = (a0 * (1 - fr) + a1 * fr).astype(np.uint8)
+        elif typ == "flow":
+            # agua que cae: la textura se desplaza en vertical dentro de su silueta
+            if "mask" not in L:
+                # silueta fija (la capa) x vetas verticales que caen (procedurales)
+                L["mask"] = arr[..., 3].astype(np.float32) / 255.0
+                h, w = arr.shape[:2]
+                rng = np.random.default_rng(5)
+                g = rng.random((max(h // 10, 4), max(w // 2, 4))).astype(np.float32)
+                g = np.concatenate([g, g, g], axis=0)
+                tex = np.asarray(Image.fromarray(g).resize((w, h * 3), Image.BICUBIC))
+                L["tex"] = np.clip(tex[h:2 * h], 0, 1)
+            sh = a["speed_px_s"] * t * rs
+            tex = np.roll(L["tex"], int(math.floor(sh)) % arr.shape[0], axis=0)
+            out = arr.copy()
+            out[..., 3] = np.clip(L["mask"] * (0.35 + 0.9 * tex) * 255, 0, 255).astype(np.uint8)
+        elif typ == "sway":
+            # vegetacion/ramas: desplazamiento horizontal creciente hacia arriba
+            h, w = out.shape[:2]
+            rows = np.arange(h)
+            k = ((h - rows) / h) ** 2
+            disp = a["amp_px"] * rs * k * (math.sin(2 * math.pi * a.get("speed", 0.3) * t) +
+                                           0.35 * math.sin(2 * math.pi * 1.7 * t + 1))
+            base = np.arange(w)[None, :] - disp[:, None]
+            i0 = np.clip(np.floor(base).astype(np.int64), 0, w - 2)
+            fr = np.clip(base - i0, 0, 1)[..., None]
+            ri = rows[:, None]
+            out = (out[ri, i0].astype(np.float32) * (1 - fr) +
+                   out[ri, i0 + 1].astype(np.float32) * fr).astype(np.uint8)
         elif typ == "surge":
             s = surge_shape((t / a["period_s"] + a.get("phase", 0.0)) % 1.0)
             dy = a["amp_px"] * s
@@ -104,6 +132,10 @@ class Stage:
 
     def draw_layer(self, frame, L, st, t):
         img, ex, ey = self._animated(L, t)
+        if L.get("follow_camera"):
+            # elemento de primer termino que acompana a la camara en un seguimiento:
+            # conserva el paralaje del paneo pero no se le "atraviesa" con el dolly
+            st = dict(st, z=0.0)
         sx, sy, tx, ty = Camera.layer_affine(st, L["D"], L["orig_w"], L["horizon_px"],
                                              self.h_ref, L.get("ground_rows", False))
         rs = self.rs
