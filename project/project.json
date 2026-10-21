@@ -1,0 +1,15 @@
+{
+  "title": "Las Crónicas de Silent",
+  "fps": 24,
+  "preview": {"resolution": [960, 540], "preset": "veryfast", "crf": 22, "shot_crf": 16},
+  "final": {"resolution": [1920, 1080], "preset": "slow", "crf": 17, "shot_crf": 12},
+  "camera": {"focal_px_1080": 2015, "height_m": 1.5, "horizon": 0.37},
+  "audio": {
+    "sample_rate": 48000,
+    "loudness_lufs": -14,
+    "true_peak": -1.5,
+    "lra": 11,
+    "levels_db": {"narration": 0, "music": -20, "ambience": -12, "sfx": -8}
+  },
+  "scene_rules": {"scene_duration_s": [45, 60], "shot_duration_s": [5, 12]}
+}

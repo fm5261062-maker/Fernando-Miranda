@@ -1,0 +1,276 @@
+{
+  "name": "ocean_dusk",
+  "placeholder": true,
+  "note": "Capas PROVISIONALES procedurales. Sustituir por fondos pintados con el mismo horizonte (horizon_px) y la misma distancia por capa.",
+  "layer_size": [
+    2560,
+    1440
+  ],
+  "reference_frame": [
+    1920,
+    1080
+  ],
+  "geometry": {
+    "focal_px_1080": 2015.0,
+    "camera_height_m": 1.5,
+    "rule": "fila = horizon_px + focal * altura_camara / distancia"
+  },
+  "sun_px": [
+    921.5999999999999,
+    514
+  ],
+  "layers": [
+    {
+      "name": "sky",
+      "image": "00_sky.png",
+      "distance": "inf",
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "clouds",
+      "image": "01_clouds.png",
+      "distance": 3000,
+      "anim": {
+        "type": "scroll",
+        "speed_px_s": 5
+      },
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "sea_far",
+      "image": "02_sea_far.png",
+      "distance": 400,
+      "anim": {
+        "type": "waves",
+        "rows": [
+          560,
+          635
+        ],
+        "amp_px": 1.5,
+        "wavelength_rows": 3,
+        "speed": 0.7
+      },
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "swells",
+      "image": "03_swells.png",
+      "distance": 70,
+      "anim": {
+        "type": "waves",
+        "rows": [
+          560,
+          660
+        ],
+        "amp_px": 3.0,
+        "wavelength_rows": 6,
+        "speed": 0.25,
+        "drift_px_s": 6
+      },
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "surf",
+      "image": "04_surf.png",
+      "distance": 34,
+      "anim": {
+        "type": "surge",
+        "period_s": 7.0,
+        "amp_px": 24,
+        "phase": 0.0,
+        "drift_px_s": -3
+      },
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "whitewater",
+      "image": "05_whitewater.png",
+      "distance": 24,
+      "anim": {
+        "type": "surge",
+        "period_s": 7.0,
+        "amp_px": 34,
+        "phase": 0.85,
+        "fade": 0.5
+      },
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "shore_wash",
+      "image": "06_shore_wash.png",
+      "distance": 18,
+      "anim": {
+        "type": "surge",
+        "period_s": 7.0,
+        "amp_px": 40,
+        "phase": 0.7,
+        "fade": 0.75
+      },
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "sand",
+      "image": "07_sand.png",
+      "distance": 12,
+      "ground": true,
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "sun_glare",
+      "image": "07b_sun_glare.png",
+      "distance": "inf",
+      "ground_rows": true,
+      "mask_with": "sand",
+      "horizon_px": 560,
+      "placeholder": true
+    },
+    {
+      "name": "foreground",
+      "image": "08_foreground.png",
+      "distance": 2.2,
+      "horizon_px": 560,
+      "placeholder": true
+    }
+  ],
+  "particles": [
+    {
+      "name": "spray",
+      "distance": 34,
+      "count": 80,
+      "region": [
+        0,
+        2560,
+        565.9264705882352,
+        619.2647058823529
+      ],
+      "velocity": [
+        10,
+        -6
+      ],
+      "life": [
+        1.2,
+        3.0
+      ],
+      "size": [
+        1.5,
+        4
+      ],
+      "color": [
+        240,
+        236,
+        230
+      ],
+      "alpha": 0.35
+    },
+    {
+      "name": "glints",
+      "type": "glint",
+      "distance": 400,
+      "count": 120,
+      "region": [
+        701.5999999999999,
+        1141.6,
+        561,
+        610.375
+      ],
+      "size": [
+        1.2,
+        3.0
+      ],
+      "color": [
+        255,
+        230,
+        186
+      ],
+      "alpha": 0.9
+    },
+    {
+      "name": "mist",
+      "distance": 3.0,
+      "count": 12,
+      "region": [
+        0,
+        2560,
+        200,
+        1440
+      ],
+      "velocity": [
+        12,
+        -2
+      ],
+      "life": [
+        6,
+        10
+      ],
+      "size": [
+        16,
+        40
+      ],
+      "color": [
+        255,
+        220,
+        190
+      ],
+      "alpha": 0.08,
+      "blur": 1
+    }
+  ],
+  "lighting": {
+    "sun_dir": [
+      -0.55,
+      -0.45
+    ],
+    "ambient": [
+      0.6,
+      0.63,
+      0.74
+    ],
+    "rim_color": [
+      255,
+      184,
+      128
+    ],
+    "rim_strength": 1.1,
+    "rim_width": 6,
+    "shadow_strength": 0.42,
+    "reflection": 0.25,
+    "contact_shadow": 0.5
+  },
+  "grade": {
+    "lift": [
+      0.012,
+      0.02,
+      0.034
+    ],
+    "gain": [
+      1.03,
+      1.0,
+      0.96
+    ],
+    "saturation": 0.94,
+    "contrast": 1.05,
+    "vignette": 0.3,
+    "grain": 0.016,
+    "bloom": 0.3,
+    "bloom_threshold": 0.8,
+    "haze": [
+      0.85,
+      0.66,
+      0.55,
+      0.04
+    ]
+  },
+  "audio": {
+    "ambience": "ocean",
+    "surge_layer": "surf",
+    "wash_layer": "shore_wash"
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "id": "test_ocean_walk_v02",
+  "title": "Prueba técnica: Silent camina de frente ante el océano (version 02)",
+  "note": "v02: corte por accion en un apoyo de pie en lugar de fundido (evita la doble exposicion), planos de 5 s para cumplir la regla 5-12 s, marcha mas legible. Mismo contenido: sin narracion, Silent camina de frente hacia camara.",
+  "character": "silent",
+  "character_view": "front",
+  "background": "ocean_dusk",
+  "fade_in": 0.6,
+  "fade_out": 0.8,
+  "shots": [
+    {
+      "id": "sh01_general",
+      "duration": 5.0,
+      "description": "Plano general: Silent avanza hacia cámara por la orilla; la cámara retrocede despacio con un leve travelling lateral.",
+      "character": {
+        "x": 0.0,
+        "z": 18.0
+      },
+      "actions": [
+        {
+          "type": "walk_front",
+          "start": 0,
+          "params": {
+            "speed": 0.82,
+            "cycle": 1.1,
+            "arm_swing": 24,
+            "elbow_forward": 18,
+            "hand_inward": 6,
+            "lift": 0.13,
+            "drop": 0.048,
+            "phase": 0.4545
+          }
+        }
+      ],
+      "eyes": {
+        "blinks": [
+          3.6
+        ]
+      },
+      "camera": {
+        "keys": [
+          {
+            "t": 0.0,
+            "distance": 11.0,
+            "pan_x": 0.35,
+            "zoom": 1.0,
+            "horizon": 0.37
+          },
+          {
+            "t": 5.0,
+            "distance": 9.2,
+            "pan_x": -0.15,
+            "zoom": 1.03,
+            "horizon": 0.37
+          }
+        ],
+        "shake": 0.8
+      },
+      "transition": {
+        "type": "cut",
+        "note": "corte en el apoyo del pie (t=5.0 s)"
+      }
+    },
+    {
+      "id": "sh02_medio",
+      "duration": 5.0,
+      "description": "Plano entero más cercano y bajo: continuidad de la marcha (misma fase de paso).",
+      "character": {
+        "continue": true
+      },
+      "actions": [
+        {
+          "type": "walk_front",
+          "start": 0,
+          "params": {
+            "speed": 0.82,
+            "cycle": 1.1,
+            "arm_swing": 24,
+            "elbow_forward": 18,
+            "hand_inward": 6,
+            "lift": 0.13,
+            "drop": 0.048,
+            "phase": "continue"
+          }
+        }
+      ],
+      "eyes": {
+        "blinks": [
+          3.3
+        ]
+      },
+      "camera": {
+        "keys": [
+          {
+            "t": 0.0,
+            "distance": 4.6,
+            "pan_x": -0.1,
+            "zoom": 1.0,
+            "horizon": 0.3,
+            "height": 1.25
+          },
+          {
+            "t": 5.0,
+            "distance": 4.1,
+            "pan_x": 0.05,
+            "zoom": 1.02,
+            "horizon": 0.3,
+            "height": 1.25
+          }
+        ],
+        "shake": 1.2
+      },
+      "transition": {
+        "type": "cut"
+      }
+    }
+  ],
+  "narration": [],
+  "music": {
+    "file": "audio/music/cronicas_tema_oceano.wav",
+    "volume_db": 0,
+    "placeholder_if_missing": true
+  },
+  "ambience": {
+    "type": "ocean",
+    "volume_db": 0
+  },
+  "footsteps": {
+    "surface": "sand",
+    "volume_db": 0
+  }
+}

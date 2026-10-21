@@ -1,0 +1,49 @@
+{
+  "scene": "scenes/test_ocean_walk_v02.json",
+  "video": "renders/version_02.mp4",
+  "total_s": 10.0,
+  "shots": [
+    {
+      "id": "sh01_general",
+      "duration": 5.0,
+      "transition": "cut",
+      "within_rule": true
+    },
+    {
+      "id": "sh02_medio",
+      "duration": 5.0,
+      "transition": "cut",
+      "within_rule": true
+    }
+  ],
+  "double_exposure_frames": 0,
+  "ik_clamped": "3/480",
+  "ik_clamped_pct": 0.6,
+  "hand_travel_px_1080": [
+    {
+      "shot": "sh01_general",
+      "x": 15.9,
+      "y": 30.4
+    },
+    {
+      "shot": "sh02_medio",
+      "x": 31.4,
+      "y": 63.5
+    }
+  ],
+  "ankle_travel_px_1080": [
+    {
+      "shot": "sh01_general",
+      "y": 35.7
+    },
+    {
+      "shot": "sh02_medio",
+      "y": 104.9
+    }
+  ],
+  "surf_layer_self_correlation": 0.686,
+  "audio_final": {
+    "integrated_lufs": -14.3,
+    "true_peak_dbfs": -2.1
+  }
+}

@@ -1,0 +1,359 @@
+{
+  "name": "Silent",
+  "view": "front",
+  "placeholder": true,
+  "note": "Capas PROVISIONALES generadas por make_placeholder_assets.py. Sustituir por la ilustracion de la hoja de diseno.",
+  "units": "px de arte; 1000 px = altura total (1.78 m); origen en el suelo entre los pies; y hacia abajo",
+  "height_m": 1.78,
+  "art_units_per_height": 1000,
+  "image_scale": 1.5,
+  "joints": {
+    "pelvis": [
+      0,
+      -505
+    ],
+    "crotch": [
+      0,
+      -412
+    ],
+    "neck": [
+      0,
+      -835
+    ],
+    "head_top": [
+      0,
+      -1020
+    ],
+    "string_top": [
+      0,
+      -858
+    ],
+    "string_end": [
+      0,
+      -735
+    ],
+    "shoulder.L": [
+      107,
+      -798
+    ],
+    "elbow.L": [
+      118,
+      -629
+    ],
+    "wrist.L": [
+      126,
+      -477
+    ],
+    "hand_tip.L": [
+      130,
+      -376
+    ],
+    "hip.L": [
+      55,
+      -494
+    ],
+    "knee.L": [
+      52,
+      -281
+    ],
+    "ankle.L": [
+      51,
+      -45
+    ],
+    "toe.L": [
+      51,
+      0
+    ],
+    "shoulder.R": [
+      -107,
+      -798
+    ],
+    "elbow.R": [
+      -118,
+      -629
+    ],
+    "wrist.R": [
+      -126,
+      -477
+    ],
+    "hand_tip.R": [
+      -130,
+      -376
+    ],
+    "hip.R": [
+      -55,
+      -494
+    ],
+    "knee.R": [
+      -52,
+      -281
+    ],
+    "ankle.R": [
+      -51,
+      -45
+    ],
+    "toe.R": [
+      -51,
+      0
+    ]
+  },
+  "parts": {
+    "foot.R": {
+      "image": "foot.R.png",
+      "bone": [
+        "ankle.R",
+        "toe.R"
+      ],
+      "image_origin": [
+        -107.33333333333333,
+        -78.66666666666663
+      ],
+      "placeholder": true
+    },
+    "foot.L": {
+      "image": "foot.L.png",
+      "bone": [
+        "ankle.L",
+        "toe.L"
+      ],
+      "image_origin": [
+        -5.333333333333343,
+        -78.66666666666663
+      ],
+      "placeholder": true
+    },
+    "shin.R": {
+      "image": "shin.R.png",
+      "bone": [
+        "knee.R",
+        "ankle.R"
+      ],
+      "image_origin": [
+        -98.0,
+        -322.0
+      ],
+      "placeholder": true
+    },
+    "shin.L": {
+      "image": "shin.L.png",
+      "bone": [
+        "knee.L",
+        "ankle.L"
+      ],
+      "image_origin": [
+        6.666666666666657,
+        -322.0
+      ],
+      "placeholder": true
+    },
+    "thigh.R": {
+      "image": "thigh.R.png",
+      "bone": [
+        "hip.R",
+        "knee.R"
+      ],
+      "image_origin": [
+        -124.66666666666667,
+        -544.0
+      ],
+      "placeholder": true
+    },
+    "thigh.L": {
+      "image": "thigh.L.png",
+      "bone": [
+        "hip.L",
+        "knee.L"
+      ],
+      "image_origin": [
+        -8.666666666666657,
+        -544.0
+      ],
+      "placeholder": true
+    },
+    "pelvis": {
+      "image": "pelvis.png",
+      "bone": [
+        "pelvis",
+        "crotch"
+      ],
+      "image_origin": [
+        -137.33333333333331,
+        -544.6666666666666
+      ],
+      "placeholder": true
+    },
+    "torso": {
+      "image": "torso.png",
+      "bone": [
+        "pelvis",
+        "neck"
+      ],
+      "image_origin": [
+        -140.66666666666669,
+        -853.3333333333334
+      ],
+      "placeholder": true
+    },
+    "drawstrings": {
+      "image": "drawstrings.png",
+      "bone": [
+        "string_top",
+        "string_end"
+      ],
+      "image_origin": [
+        -28.666666666666657,
+        -862.0
+      ],
+      "placeholder": true
+    },
+    "upper_arm.R": {
+      "image": "upper_arm.R.png",
+      "bone": [
+        "shoulder.R",
+        "elbow.R"
+      ],
+      "image_origin": [
+        -142.66666666666669,
+        -833.3333333333334
+      ],
+      "placeholder": true
+    },
+    "upper_arm.L": {
+      "image": "upper_arm.L.png",
+      "bone": [
+        "shoulder.L",
+        "elbow.L"
+      ],
+      "image_origin": [
+        84.0,
+        -833.3333333333334
+      ],
+      "placeholder": true
+    },
+    "forearm.R": {
+      "image": "forearm.R.png",
+      "bone": [
+        "elbow.R",
+        "wrist.R"
+      ],
+      "image_origin": [
+        -146.0,
+        -661.3333333333333
+      ],
+      "placeholder": true
+    },
+    "forearm.L": {
+      "image": "forearm.L.png",
+      "bone": [
+        "elbow.L",
+        "wrist.L"
+      ],
+      "image_origin": [
+        92.66666666666669,
+        -661.3333333333333
+      ],
+      "placeholder": true
+    },
+    "hand.R": {
+      "image": "hand.R.png",
+      "bone": [
+        "wrist.R",
+        "hand_tip.R"
+      ],
+      "image_origin": [
+        -154.66666666666669,
+        -495.33333333333337
+      ],
+      "placeholder": true
+    },
+    "hand.L": {
+      "image": "hand.L.png",
+      "bone": [
+        "wrist.L",
+        "hand_tip.L"
+      ],
+      "image_origin": [
+        92.66666666666669,
+        -495.33333333333337
+      ],
+      "placeholder": true
+    },
+    "hood_back": {
+      "image": "hood_back.png",
+      "bone": [
+        "neck",
+        "head_top"
+      ],
+      "image_origin": [
+        -106.66666666666667,
+        -1027.3333333333333
+      ],
+      "placeholder": true
+    },
+    "face": {
+      "image": "face.png",
+      "bone": [
+        "neck",
+        "head_top"
+      ],
+      "image_origin": [
+        -51.33333333333334,
+        -1001.3333333333334
+      ],
+      "placeholder": true
+    },
+    "eyes": {
+      "image": "eyes.png",
+      "bone": [
+        "neck",
+        "head_top"
+      ],
+      "image_origin": [
+        -32.0,
+        -961.3333333333334
+      ],
+      "placeholder": true
+    },
+    "hood_rim": {
+      "image": "hood_rim.png",
+      "bone": [
+        "neck",
+        "head_top"
+      ],
+      "image_origin": [
+        -65.33333333333334,
+        -1018.6666666666666
+      ],
+      "placeholder": true
+    }
+  },
+  "draw_order": [
+    "foot.R",
+    "foot.L",
+    "shin.R",
+    "shin.L",
+    "thigh.R",
+    "thigh.L",
+    "pelvis",
+    "torso",
+    "drawstrings",
+    "upper_arm.R",
+    "upper_arm.L",
+    "forearm.R",
+    "forearm.L",
+    "hand.R",
+    "hand.L",
+    "hood_back",
+    "face",
+    "eyes",
+    "hood_rim"
+  ],
+  "variants": {
+    "hand.R": {
+      "point": "hand_point.R.png"
+    },
+    "hand.L": {
+      "point": "hand_point.L.png"
+    }
+  }
+}

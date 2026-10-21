@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 *.blend1
 .venv/
+# intermedios de render (planos sueltos, audio, mezcla); los MP4 versionados se conservan
+renders/*/

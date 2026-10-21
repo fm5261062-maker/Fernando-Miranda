@@ -1,4 +1,63 @@
-# SILENT: personaje 3D procedural (Python + Blender)
+# Las Crónicas de Silent: pipeline 2D (Python + FFmpeg)
+
+Pipeline modular para producir escenas de 45–60 s a partir de planos de 5–12 s: personaje 2D
+por capas con rig, escenarios multicapa con paralaje real, cámara virtual, montaje y mezcla
+de audio con FFmpeg. **El arte actual es provisional** (falta la hoja de diseño): ver
+`assets/MISSING_ASSETS.md`.
+
+```
+assets/character/silent/front/   capas PNG + rig.json   (especificación: assets/character/README.md)
+assets/backgrounds/ocean_dusk/   capas PNG + set.json   (distancia y horizonte por capa)
+audio/narration | music | sfx    WAV 48 kHz (faltan; se usan pistas sintetizadas provisionales)
+scenes/*.json                    una escena: planos, acciones, cámara, transiciones, audio
+scripts/render_scene.py          render de escena (vista previa 960x540 o final 1920x1080)
+scripts/qc_metrics.py            métricas de control de calidad de un render
+scripts/make_placeholder_assets.py  genera el arte PROVISIONAL (marcado como tal)
+scripts/silent2d/                motor: character, actions, camera, stage, audio, render
+project/project.json             fps, resoluciones, cámara, niveles y sonoridad objetivo
+renders/                         version_01.mp4, version_02.mp4, informe y métricas
+```
+
+## Ejecutar
+Requisitos: Python 3.10+, `numpy`, `Pillow` y `ffmpeg` (probado con FFmpeg 6.1 en Ubuntu 24.04).
+
+```bash
+pip install numpy pillow                       # si no están instalados
+python3 scripts/make_placeholder_assets.py     # solo si faltan capas (no pisa arte definitivo)
+python3 scripts/render_scene.py scenes/test_ocean_walk_v02.json --quality preview
+python3 scripts/render_scene.py scenes/test_ocean_walk_v02.json --quality final \
+    --output renders/version_02.mp4
+python3 scripts/render_scene.py scenes/test_ocean_walk_v02.json --still 7.5 --out frame.png
+python3 scripts/qc_metrics.py scenes/test_ocean_walk_v02.json renders/version_02.mp4
+```
+
+Cada plano se exporta por separado en `renders/<escena>/<calidad>/shots/`. Después se monta
+con `xfade`/`concat`, se mezcla el audio (ducking de música y ambiente bajo la narración,
+normalización a -14 LUFS en dos pasadas y limitador de pico real) y se multiplexa en el MP4
+final. En cada render se genera `render_report.json`, con los recursos que faltan, la
+sonoridad medida y el tiempo de cada paso.
+
+## Modificar una escena
+- **Duración y planos:** `shots[].duration` (el render avisa si un plano sale de 5–12 s).
+- **Acciones:** `shots[].actions[]` con `type` (`walk_front`, `walk_side`, `idle`,
+  `head_turn`, `observe`, `point`), `start`/`end`, `blend`, `layer`
+  (`base` u `overlay`) y `params` (velocidad, ciclo, balanceo de brazos...).
+- **Continuidad entre planos:** `"character": {"continue": true}` y `"phase": "continue"`.
+  El personaje sigue en el mismo punto y la misma fase de paso.
+- **Cámara:** `camera.keys[]` con `t`, `distance` (o `z`), `pan_x`, `zoom`, `horizon`,
+  `height`; `shake` para cámara en mano.
+- **Transiciones:** `cut`, `dissolve`, `fade_black`, `wipe`... y `fade_in`/`fade_out` de escena.
+- **Audio:** `narration[]` (`file`, `start`, `text`), `music`, `ambience`, `footsteps`.
+  Los niveles están en `project/project.json`.
+
+¿Por qué no Godot? Godot no está instalado en este entorno, y para exportar vídeo
+necesita contexto gráfico (GPU o pantalla). El motor en Python + FFmpeg se ejecuta en
+cualquier servidor sin GPU. Las escenas son JSON y las capas son PNG con pivotes, así que
+se pueden cargar en Godot más adelante si se quiere edición interactiva.
+
+---
+
+# SILENT: personaje 3D procedural (Python + Blender), proyecto anterior
 
 SILENT es un narrador silencioso para YouTube: observa y presenta historias sin
 participar en ellas. Viste una sudadera gris con la capucha puesta. Su rostro
