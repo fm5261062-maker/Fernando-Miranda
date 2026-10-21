@@ -1,0 +1,40 @@
+# Renderiza SILENT gratis en los servidores de GitHub (no usa tu dispositivo).
+# Ejecutalo desde la pestana "Actions" -> "Render SILENT" -> "Run workflow".
+# Los archivos generados se descargan como artefacto "silent-output".
+name: Render SILENT
+
+on:
+  workflow_dispatch:
+    inputs:
+      video:
+        description: "Renderizar tambien el MP4 (unos 10 min)"
+        type: boolean
+        default: false
+  push:
+    paths:
+      - "create_silent.py"
+      - "setup_cloud.sh"
+      - ".github/workflows/render-silent.yml"
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Blender y generar SILENT
+        run: |
+          chmod +x setup_cloud.sh
+          if [ "${{ inputs.video }}" = "true" ]; then
+            OUTDIR=ci_output ./setup_cloud.sh --official --video
+          else
+            OUTDIR=ci_output ./setup_cloud.sh --official
+          fi
+
+      - name: Subir resultados
+        uses: actions/upload-artifact@v4
+        with:
+          name: silent-output
+          path: ci_output/
+          retention-days: 14

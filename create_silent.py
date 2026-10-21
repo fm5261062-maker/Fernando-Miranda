@@ -838,6 +838,20 @@ def animate(arm):
 # --------------------------------------------------------------------------
 # Render y exportacion
 # --------------------------------------------------------------------------
+def has_denoiser():
+    """Algunas builds (p. ej. el paquete de Ubuntu) no incluyen OpenImageDenoise."""
+    try:
+        import _cycles
+        return bool(getattr(_cycles, "with_openimagedenoise", False))
+    except ImportError:
+        return False
+
+
+def effective_samples(samples):
+    # Sin denoiser se compensa el ruido con mas muestras
+    return samples if has_denoiser() else samples * 3
+
+
 def setup_render(samples):
     scn = bpy.context.scene
     scn.render.engine = "CYCLES"
@@ -850,7 +864,10 @@ def setup_render(samples):
     scn.cycles.glossy_bounces = 2
     scn.cycles.transmission_bounces = 0
     scn.cycles.volume_bounces = 0
-    scn.cycles.use_denoising = True
+    scn.cycles.use_denoising = has_denoiser()
+    if not has_denoiser():
+        print("[SILENT] aviso: Blender sin OpenImageDenoise; se renderiza sin "
+              "denoise y con el triple de muestras")
     scn.render.resolution_x, scn.render.resolution_y = 1280, 720
     scn.render.resolution_percentage = 100
     scn.render.fps = FPS
@@ -865,7 +882,7 @@ def setup_render(samples):
 
 def render_still(path, frame, samples):
     scn = bpy.context.scene
-    scn.cycles.samples = samples
+    scn.cycles.samples = effective_samples(samples)
     scn.frame_set(frame)
     scn.render.image_settings.file_format = "PNG"
     scn.render.filepath = path
@@ -874,7 +891,7 @@ def render_still(path, frame, samples):
 
 def render_video(path, samples, scale):
     scn = bpy.context.scene
-    scn.cycles.samples = samples
+    scn.cycles.samples = effective_samples(samples)
     scn.render.resolution_percentage = scale
     try:
         scn.render.image_settings.media_type = "VIDEO"  # Blender 5.x
